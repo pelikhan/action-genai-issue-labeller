@@ -1,6 +1,8 @@
-#  action
+# action action
 
-A custom action that automatically assigns labels to a GitHub issue.
+A custom GitHub Action that runs the script `action`.
+
+
 
 ## Inputs
 
@@ -9,6 +11,8 @@ A custom action that automatically assigns labels to a GitHub issue.
 - `debug`: Enable debug logging.
 
 ## Usage
+
+Add the following to your step in your workflow file:
 
 ```yaml
 on:
@@ -43,7 +47,6 @@ jobs:
       - uses: pelikhan/action-genai-issue-labeller@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_issue: ${{ github.event.issue.number }}
 ```
 
 ## Development
@@ -97,4 +100,12 @@ Then, you can run the action with:
 
 ```bash
 npm run act
+```
+
+## Upgrade
+
+The GenAIScript version is pinned in the `package.json` file. To upgrade it, run:
+
+```bash
+npm run upgrade
 ```

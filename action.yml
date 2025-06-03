@@ -1,8 +1,8 @@
-name: "genai-issue-labeller"
-description: action
+name: action-genai-issue-labeller
+description: Action
 inputs:
   github_token:
-    description: "GitHub token with `models: read` and `issues: write` permission at least."
+    description: "GitHub token with `models: read` permission at least."
     required: true
   github_issue:
     description: GitHub issue number to use when generating comments.

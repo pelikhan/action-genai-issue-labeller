@@ -1,19 +1,19 @@
 {
-  "description": "GitHub Action for ",
-  "devDependencies": {
-    "prettier": "^3.5.3"
-  },
+  "description": "GitHub Action for action",
   "dependencies": {
-    "genaiscript": "^1.142.1"
+    "genaiscript": "1.142.2"
   },
   "scripts": {
-    "docker:build": "docker build -t -action .",
-    "docker:start": "docker run -e GITHUB_TOKEN -action",
+    "upgrade": "npx -y npm-check-updates -u && npm install",
+    "docker:build": "docker build -t pelikhan-action-genai-issue-labeller .",
+    "docker:start": "docker run -e GITHUB_TOKEN pelikhan-action-genai-issue-labeller",
     "act:install": "gh extension install https://github.com/nektos/gh-act",
     "act": "gh act",
     "lint": "npx --yes prettier --write genaisrc/",
+    "fix": "genaiscript scripts fix",
     "typecheck": "genaiscript scripts compile",
-    "configure": "genaiscript action configure action --out .",
+    "configure": "genaiscript configure action",
+    "test": "echo 'No tests defined.'",
     "start": "genaiscript run action --github-workspace"
   }
 }
