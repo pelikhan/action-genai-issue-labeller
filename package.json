@@ -1,0 +1,16 @@
+{
+  "description": "GitHub Action for ",
+  "dependencies": {
+    "genaiscript": "^1.142.1"
+  },
+  "scripts": {
+    "docker:build": "docker build -t -action .",
+    "docker:start": "docker run -e GITHUB_TOKEN -action",
+    "act:install": "gh extension install https://github.com/nektos/gh-act",
+    "act": "gh act",
+    "lint": "npx --yes prettier --write genaisrc/",
+    "typecheck": "genaiscript scripts compile",
+    "configure": "genaiscript action configure action --out .",
+    "start": "genaiscript run action --github-workspace"
+  }
+}

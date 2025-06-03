@@ -1,0 +1,21 @@
+name: Label issue
+on:
+    workflow_dispatch:
+    issue:
+      types: [opened, edited, reopened]
+permissions:
+    contents: read
+    issues: write
+    models: read
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pelikhan/action-genai-issue-labeller@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_issue: ${{ github.event.issue.number }}
