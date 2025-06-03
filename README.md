@@ -24,7 +24,7 @@ with:
 ## Example
 
 ```yaml
-name: Run  Action
+name: genai issue labeller
 on:
     workflow_dispatch:
     push:
@@ -36,7 +36,7 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
     cancel-in-progress: true
 jobs:
-  run-script:
+  genai-issue-labeller:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
