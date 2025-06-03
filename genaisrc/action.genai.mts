@@ -12,7 +12,7 @@ label2: reasoning2
 ...
 
 `.role("system")
-    ctx.def("LABELS", YAML.stringify(labels))
+    ctx.def("LABELS", labels.map(({ name, description }) => `${name}: ${description}`).join("\n"))
     ctx.def("ISSUE_TITLE", issue.title)
     ctx.def("ISSUE_BODY", issue.body)
 }, {
