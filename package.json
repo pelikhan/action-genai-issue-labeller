@@ -1,5 +1,8 @@
 {
   "description": "GitHub Action for ",
+  "devDependencies": {
+    "prettier": "^3.5.3"
+  },
   "dependencies": {
     "genaiscript": "^1.142.1"
   },
