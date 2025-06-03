@@ -1,8 +1,8 @@
 name: Label issue
 on:
     workflow_dispatch:
-    issue:
-      types: [opened, edited, reopened]
+    issues:
+      types: [opened]
 permissions:
     contents: read
     issues: write
