@@ -1,19 +1,14 @@
-name: ""
+name: "genai-issue-labeller"
 description: action
 inputs:
   github_token:
-    description: "GitHub token with `models: read` permission at least."
+    description: "GitHub token with `models: read` and `issues: write` permission at least."
     required: true
   github_issue:
     description: GitHub issue number to use when generating comments.
   debug:
     description: Enable debug logging.
     required: false
-outputs:
-  text:
-    description: The generated text output.
-  data:
-    description: The generated JSON data output, parsed and stringified.
 runs:
   using: docker
   image: Dockerfile

@@ -1,8 +1,6 @@
 #  action
 
-A custom GitHub Action that runs the script ``.
-
-
+A custom action that automatically assigns labels to a GitHub issue.
 
 ## Inputs
 
@@ -10,17 +8,17 @@ A custom GitHub Action that runs the script ``.
 - `github_issue`: GitHub issue number to use when generating comments.
 - `debug`: Enable debug logging.
 
-## Outputs
-
-- `text`: The generated text output.
-- `data`: The generated JSON data output, parsed and stringified.
-
 ## Usage
 
 ```yaml
-uses: -action
+on:
+  issue:
+    types: [created]
+...
+uses: pelikhan/action-genai-issue-labeller@main
 with:
   github_token: ${{ secrets.GITHUB_TOKEN }}
+  github_issue: ${{ github.event.issue.number }}
 ```
 
 ## Example
@@ -32,7 +30,7 @@ on:
     push:
 permissions:
     contents: read
-    # pull-requests: write
+    issues: write
     models: read
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -45,6 +43,7 @@ jobs:
       - uses: pelikhan/action-genai-issue-labeller@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_issue: ${{ github.event.issue.number }}
 ```
 
 ## Development
