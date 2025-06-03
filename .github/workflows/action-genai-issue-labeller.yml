@@ -1,6 +1,5 @@
 name: Label issue
 on:
-    workflow_dispatch:
     issues:
       types: [opened]
 permissions:

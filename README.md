@@ -47,6 +47,7 @@ jobs:
       - uses: pelikhan/action-genai-issue-labeller@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_issue: ${{ github.event.issue.number }}
 ```
 
 ## Development
