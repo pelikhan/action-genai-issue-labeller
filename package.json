@@ -1,7 +1,7 @@
 {
   "description": "GitHub Action for action",
   "dependencies": {
-    "genaiscript": "1.142.2"
+    "genaiscript": "1.142.3"
   },
   "scripts": {
     "upgrade": "npx -y npm-check-updates -u && npm install",
