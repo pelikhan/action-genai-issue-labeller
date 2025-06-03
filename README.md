@@ -12,7 +12,7 @@ A custom action that automatically assigns labels to a GitHub issue.
 
 ```yaml
 on:
-  issue:
+  issues:
     types: [created]
 ...
 uses: pelikhan/action-genai-issue-labeller@main
@@ -26,8 +26,8 @@ with:
 ```yaml
 name: genai issue labeller
 on:
-    workflow_dispatch:
-    push:
+    issues:
+        types: [opened]
 permissions:
     contents: read
     issues: write
