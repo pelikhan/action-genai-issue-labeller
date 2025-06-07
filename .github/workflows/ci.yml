@@ -20,7 +20,11 @@ jobs:
       - run: npm ci
       - run: npm test
   test-action:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_issue: "2"
