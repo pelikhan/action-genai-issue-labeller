@@ -1,8 +1,9 @@
-# action action
+# GitHub Action that assigns Labels to Issue
 
-A custom GitHub Action that runs the script `action`.
+Uses an LLM to assign labels to a issue.
 
-
+> [!NOTE]
+> This action uses GitHub Models for LLM inference.
 
 ## Inputs
 

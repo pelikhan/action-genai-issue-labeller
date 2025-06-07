@@ -1,4 +1,5 @@
 const issue = await github.getIssue();
+if (!issue) throw new Error("Issue not configure, did you set the 'github_issue' input?")
 const labels = await github.listIssueLabels();
 
 const { text } = await runPrompt(

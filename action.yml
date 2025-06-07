@@ -1,5 +1,5 @@
 name: action-genai-issue-labeller
-description: Action
+description: Labels GitHub issues based on their content using GitHub Models.
 inputs:
   github_token:
     description: "GitHub token with `models: read` permission at least."
@@ -9,6 +9,9 @@ inputs:
   debug:
     description: Enable debug logging.
     required: false
+branding:
+    icon: "map-pin"
+    color: "yellow"
 runs:
   using: docker
   image: Dockerfile
