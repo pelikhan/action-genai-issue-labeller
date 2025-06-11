@@ -1,5 +1,5 @@
 {
-  "description": "GitHub Action for action",
+  "description": "A GitHub Action to label issues based on their content using AI.",
   "dependencies": {
     "genaiscript": "1.142.3"
   },

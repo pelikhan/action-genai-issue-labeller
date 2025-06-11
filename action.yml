@@ -1,11 +1,17 @@
 name: action-genai-issue-labeller
 description: Labels GitHub issues based on their content using GitHub Models.
 inputs:
+  instructions:
+    description:
+      Additional Instructions for the AI model to follow when labeling
+      issues. These instructions will be inserted in the system prompt.
+    required: false
   github_token:
     description: "GitHub token with `models: read` permission at least."
     required: true
   github_issue:
     description: GitHub issue number to use when generating comments.
+    required: true
   debug:
     description: Enable debug logging.
     required: false

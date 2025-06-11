@@ -7,8 +7,9 @@ Uses an LLM to assign labels to a issue.
 
 ## Inputs
 
-- `github_token`: GitHub token with `models: read` permission at least. (required)
-- `github_issue`: GitHub issue number to use when generating comments.
+- `github_token`: **required** GitHub token with `models: read` permission at least. (required)
+- `github_issue`: **required** GitHub issue number to use when generating comments.
+- `instructions`: Additional instructions to the LLM on how to label the issue.
 - `debug`: Enable debug logging.
 
 ## Usage
@@ -20,10 +21,14 @@ on:
   issues:
     types: [created]
 ...
-uses: pelikhan/action-genai-issue-labeller@main
-with:
-  github_token: ${{ secrets.GITHUB_TOKEN }}
-  github_issue: ${{ github.event.issue.number }}
+jobs:
+  issue-labeller:
+    ...
+    steps:
+      - uses: pelikhan/action-genai-issue-labeller@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_issue: ${{ github.event.issue.number }}
 ```
 
 ## Example
@@ -31,15 +36,15 @@ with:
 ```yaml
 name: genai issue labeller
 on:
-    issues:
-        types: [opened]
+  issues:
+    types: [opened]
 permissions:
-    contents: read
-    issues: write
-    models: read
+  contents: read
+  issues: write
+  models: read
 concurrency:
-    group: ${{ github.workflow }}-${{ github.ref }}
-    cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   genai-issue-labeller:
     runs-on: ubuntu-latest
