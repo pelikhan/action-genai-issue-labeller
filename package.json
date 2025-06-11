@@ -16,5 +16,6 @@
     "test": "echo 'No tests defined.'",
     "dev": "GITHUB_ISSUE=4 DEBUG=script* genaiscript run action",
     "start": "genaiscript run action --github-workspace"
-  }
+  },
+  "version": "0.0.1"
 }
