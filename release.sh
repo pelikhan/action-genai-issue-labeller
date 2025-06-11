@@ -15,7 +15,7 @@ git push origin HEAD --tags
 gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $NEW_VERSION"
 
 # Step 4: update major tag if any
-MAJOR=$(echo "$version" | cut -d. -f1)
+MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
 git tag -f "v$MAJOR"
 git push origin HEAD --tags
 
