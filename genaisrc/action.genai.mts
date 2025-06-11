@@ -22,18 +22,18 @@ label2 = reasoning2
       "LABELS",
       labels
         .map(({ name, description }) => `${name}: ${description}`)
-        .join("\n")
+        .join("\n"),
     );
     ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
   },
   {
     choices: labels.map((label) => label.name),
-  }
+  },
 );
 
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
-  { defaultValue: {} }
+  { defaultValue: {} },
 ) as Record<string, string>;
 dbg(`entries: %O`, entries);
 const matchedLabels = Object.entries(entries)

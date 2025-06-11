@@ -7,6 +7,7 @@ git pull
 
 # Step 1: Bump patch version using npm
 NEW_VERSION=$(npm version patch -m "chore: bump version to %s")
+echo "version: $NEW_VERSION"
 
 # Step 2: Push commit and tag
 git push origin HEAD --tags
@@ -16,6 +17,7 @@ gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $
 
 # Step 4: update major tag if any
 MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
+echo "major: $MAJOR"
 git tag -f "$MAJOR"
 git push origin HEAD --tags
 
