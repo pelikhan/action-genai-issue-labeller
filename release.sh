@@ -16,7 +16,7 @@ gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $
 
 # Step 4: update major tag if any
 MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
-git tag -f "v$MAJOR"
+git tag -f "$MAJOR"
 git push origin HEAD --tags
 
 echo "✅ GitHub release $NEW_VERSION created successfully."
