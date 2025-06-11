@@ -1,15 +1,16 @@
+# make sure there's no other changes
+git pull
+
 # Lint and build
 npm run lint
-npm run typecheck
-
 # Step 0: ensure we're in sync
 if [ "$(git status --porcelain)" ]; then
   echo "❌ Pending changes detected. Commit or stash them first."
   exit 1
 fi
 
-# make sure there's no other changes
-git pull
+# typecheck test
+npm run typecheck
 
 # Step 1: Bump patch version using npm
 NEW_VERSION=$(npm version patch -m "chore: bump version to %s")
