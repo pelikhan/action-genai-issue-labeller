@@ -17,5 +17,5 @@
     "dev": "GITHUB_ISSUE=4 DEBUG=script* genaiscript run action",
     "start": "genaiscript run action --github-workspace"
   },
-  "version": "0.0.6"
+  "version": "0.0.7"
 }
