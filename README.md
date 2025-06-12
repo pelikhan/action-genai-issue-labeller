@@ -43,7 +43,7 @@ permissions:
   issues: write
   models: read
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.issue.number }}
   cancel-in-progress: true
 jobs:
   genai-issue-labeller:
