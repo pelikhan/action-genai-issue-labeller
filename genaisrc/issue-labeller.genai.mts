@@ -92,10 +92,12 @@ if (matchedLabels.length === 0) {
   output.warn("No labels matched, skipping.");
 } else {
   output.itemValue("matched labels", matchedLabels.join(", "));
+  const filteredLabels = matchedLabels
+    ? matchedLabels.slice(0, maxLabels)
+    : matchedLabels;
+  dbg(`filtered labels: %O`, filteredLabels);
   dbg(`existing labels: %O`, issueLabels);
-  const labels = [
-    ...new Set([...issueLabels, ...matchedLabels.slice(0, maxLabels)]),
-  ];
+  const labels = Array.from(new Set([...issueLabels, ...filteredLabels]));
   output.itemValue("merged labels", labels.join(", "));
   dbg(`final labels: %O`, labels);
   await github.updateIssue(issue.number, {

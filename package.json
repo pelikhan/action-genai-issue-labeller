@@ -14,7 +14,7 @@
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action",
     "test": "echo 'No tests defined.'",
-    "dev": "INPUT_MAX_LABELS=1 INPUT_GITHUB_ISSUE=4 DEBUG=script* genaiscript run issue-labeller",
+    "dev": "INPUT_GITHUB_ISSUE=5 DEBUG=script* genaiscript run issue-labeller",
     "start": "genaiscript run issue-labeller --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
     "release": "sh release.sh"
   },
