@@ -25,7 +25,7 @@ jobs:
   issue-labeller:
     ...
     steps:
-      - uses: pelikhan/action-genai-issue-labeller@main
+      - uses: pelikhan/action-genai-issue-labeller@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_issue: ${{ github.event.issue.number }}
@@ -50,10 +50,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pelikhan/action-genai-issue-labeller@main
+      - uses: pelikhan/action-genai-issue-labeller@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_issue: ${{ github.event.issue.number }}
+          instructions: "Label this issue as 'bug' if it is a bug report."
 ```
 
 ## Development
