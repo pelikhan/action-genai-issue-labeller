@@ -15,7 +15,7 @@ script({
   },
 });
 
-const { dbg, vars } = env;
+const { dbg, vars, output } = env;
 const issue = await github.getIssue();
 if (!issue)
   throw new Error("Issue not configure, did you set the 'github_issue' input?");
@@ -24,7 +24,7 @@ const labels = await github.listIssueLabels();
 const issueLabels =
   issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
 
-const { fences, text } = await runPrompt((ctx) => {
+const { fences, text, error } = await runPrompt((ctx) => {
   ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
     "system",
   );
@@ -52,6 +52,7 @@ label2 = reasoning2
   );
   ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
 });
+if (error) cancel(`error while running the prompt: ${error.message}`);
 
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
