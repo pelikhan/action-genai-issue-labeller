@@ -39,8 +39,10 @@ const issueLabels =
   issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
 
 output.heading(3, "Issue Details");
+output.itemLink(issue.html_url);
 output.fence(issue.title);
 output.fence(issue.body);
+output.itemValue("labels", issueLabels.join(", "));
 
 const { fences, text, error } = await runPrompt((ctx) => {
   ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
@@ -87,11 +89,12 @@ dbg(`matched: %O`, matchedLabels);
 if (matchedLabels.length === 0) {
   output.warn("No labels matched, skipping.");
 } else {
-  output.itemValue("Matched labels", matchedLabels.join(", "));
+  output.itemValue("matched labels", matchedLabels.join(", "));
   dbg(`existing labels: %O`, issueLabels);
   const labels = [
     ...new Set([...issueLabels, ...matchedLabels.slice(0, maxLabels)]),
   ];
+  output.itemValue("merged labels", labels.join(", "));
   dbg(`final labels: %O`, labels);
   await github.updateIssue(issue.number, {
     labels,
