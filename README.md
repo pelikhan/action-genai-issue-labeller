@@ -19,7 +19,12 @@ Add the following to your step in your workflow file:
 ```yaml
 on:
   issues:
-    types: [created]
+      types: [opened, reopened, edited]
+...
+permissions:
+  contents: read
+  issues: write
+  models: read
 ...
 jobs:
   issue-labeller:
@@ -33,11 +38,13 @@ jobs:
 
 ## Example
 
+This workflow will label issues using GitHub Models.
+
 ```yaml
 name: genai issue labeller
 on:
   issues:
-    types: [opened]
+    types: [opened, reopened, edited]
 permissions:
   contents: read
   issues: write
@@ -54,7 +61,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           github_issue: ${{ github.event.issue.number }}
-          instructions: "Label this issue as 'bug' if it is a bug report."
 ```
 
 ## Development
