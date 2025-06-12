@@ -24,18 +24,17 @@ const labels = await github.listIssueLabels();
 const issueLabels =
   issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
 
-const { fences, text } = await runPrompt(
-  (ctx) => {
-    ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
-      "system"
-    );
-    if (instructions)
-      ctx.$`## Additional Instructions
+const { fences, text } = await runPrompt((ctx) => {
+  ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
+    "system",
+  );
+  if (instructions)
+    ctx.$`## Additional Instructions
 ${instructions}`.role("system");
-    if (issueLabels?.length)
-      ctx.$`## Existing Labels
+  if (issueLabels?.length)
+    ctx.$`## Existing Labels
 The issue already has these labels: ${issueLabels.join(", ")}`.role("system");
-    ctx.$`## Output format
+  ctx.$`## Output format
 
 Respond with a list of "<label name> = <reasoning>" pairs, one per line in INI format.
 If you think the issue does not fit any of the provided labels, respond with "no label".
@@ -47,22 +46,16 @@ label2 = reasoning2
 ...
 
 `.role("system");
-    ctx.def(
-      "LABELS",
-      labels
-        .map(({ name, description }) => `${name}: ${description}`)
-        .join("\n")
-    );
-    ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
-  },
-  {
-    choices: labels.map((label) => label.name),
-  }
-);
+  ctx.def(
+    "LABELS",
+    labels.map(({ name, description }) => `${name}: ${description}`).join("\n"),
+  );
+  ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
+});
 
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
-  { defaultValue: {} }
+  { defaultValue: {} },
 ) as Record<string, string>;
 dbg(`entries: %O`, entries);
 const matchedLabels = Object.entries(entries)
