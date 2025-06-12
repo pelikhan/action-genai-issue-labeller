@@ -18,5 +18,5 @@
     "start": "genaiscript run action --github-workspace",
     "release": "sh release.sh"
   },
-  "version": "0.0.17"
+  "version": "0.0.18"
 }
