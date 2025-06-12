@@ -2,6 +2,10 @@ script({
   title: "Labels GitHub issues based on their content using GitHub Models",
   description:
     "A GitHub Action to label issues based on their content using AI.",
+  branding: {
+    icon: "map-pin",
+    color: "yellow",
+  },
   parameters: {
     instructions: {
       type: "string",
@@ -64,6 +68,14 @@ if (matchedLabels.length === 0) {
   console.log("No labels matched, skipping.");
 } else {
   console.log("Matched labels:", matchedLabels);
-  await github.updateIssue(issue.number, { labels: matchedLabels });
+  // merge with existing issue
+  const existingLabels =
+    issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
+  dbg(`existing labels: %O`, existingLabels);
+  const labels = [...new Set([...existingLabels, ...matchedLabels])];
+  dbg(`final labels: %O`, labels);
+  await github.updateIssue(issue.number, {
+    labels,
+  });
   console.log("Labels updated successfully.");
 }
