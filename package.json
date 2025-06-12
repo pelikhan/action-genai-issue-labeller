@@ -18,5 +18,5 @@
     "start": "genaiscript run issue-labeller --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
     "release": "sh release.sh"
   },
-  "version": "0.0.22"
+  "version": "0.0.23"
 }
