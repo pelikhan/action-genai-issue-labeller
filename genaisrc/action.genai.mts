@@ -39,7 +39,7 @@ const issueLabels =
 
 const { fences, text, error } = await runPrompt((ctx) => {
   ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
-    "system"
+    "system",
   );
   if (instructions)
     ctx.$`## Additional Instructions
@@ -62,7 +62,7 @@ label2 = reasoning2
 `.role("system");
   ctx.def(
     "LABELS",
-    labels.map(({ name, description }) => `${name}: ${description}`).join("\n")
+    labels.map(({ name, description }) => `${name}: ${description}`).join("\n"),
   );
   ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
 });
@@ -70,7 +70,7 @@ if (error) cancel(`error while running the prompt: ${error.message}`);
 
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
-  { defaultValue: {} }
+  { defaultValue: {} },
 ) as Record<string, string>;
 dbg(`entries: %O`, entries);
 const matchedLabels = Object.entries(entries)
