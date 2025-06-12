@@ -7,6 +7,11 @@ script({
     color: "yellow",
   },
   parameters: {
+    maxLabels: {
+      type: "integer",
+      description: "Maximum number of labels to suggest.",
+      minimum: 1,
+    },
     instructions: {
       type: "string",
       description:
@@ -19,14 +24,22 @@ const { dbg, vars, output } = env;
 const issue = await github.getIssue();
 if (!issue)
   throw new Error("Issue not configure, did you set the 'github_issue' input?");
-const { instructions } = vars as { instructions: string };
+const { instructions, maxLabels } = vars as {
+  instructions: string;
+  maxLabels: number;
+};
+
+dbg(`issue: %O`, issue);
+dbg(`maxLabels: %d`, maxLabels);
+dbg(`instructions: %s`, instructions || "none");
+
 const labels = await github.listIssueLabels();
 const issueLabels =
   issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
 
 const { fences, text, error } = await runPrompt((ctx) => {
   ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
-    "system",
+    "system"
   );
   if (instructions)
     ctx.$`## Additional Instructions
@@ -38,6 +51,7 @@ The issue already has these labels: ${issueLabels.join(", ")}`.role("system");
 
 Respond with a list of "<label name> = <reasoning>" pairs, one per line in INI format.
 If you think the issue does not fit any of the provided labels, respond with "no label".
+Rank the labels by relevance, with the most relevant label first.
 
 \`\`\`\ini
 label1 = reasoning1
@@ -48,7 +62,7 @@ label2 = reasoning2
 `.role("system");
   ctx.def(
     "LABELS",
-    labels.map(({ name, description }) => `${name}: ${description}`).join("\n"),
+    labels.map(({ name, description }) => `${name}: ${description}`).join("\n")
   );
   ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
 });
@@ -56,7 +70,7 @@ if (error) cancel(`error while running the prompt: ${error.message}`);
 
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
-  { defaultValue: {} },
+  { defaultValue: {} }
 ) as Record<string, string>;
 dbg(`entries: %O`, entries);
 const matchedLabels = Object.entries(entries)
@@ -68,7 +82,9 @@ if (matchedLabels.length === 0) {
 } else {
   console.log("Matched labels:", matchedLabels);
   dbg(`existing labels: %O`, issueLabels);
-  const labels = [...new Set([...issueLabels, ...matchedLabels])];
+  const labels = [
+    ...new Set([...issueLabels, ...matchedLabels.slice(0, maxLabels)]),
+  ];
   dbg(`final labels: %O`, labels);
   await github.updateIssue(issue.number, {
     labels,
