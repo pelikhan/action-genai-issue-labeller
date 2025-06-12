@@ -92,7 +92,7 @@ if (matchedLabels.length === 0) {
   output.warn("No labels matched, skipping.");
 } else {
   output.itemValue("matched labels", matchedLabels.join(", "));
-  const filteredLabels = matchedLabels
+  const filteredLabels = maxLabels
     ? matchedLabels.slice(0, maxLabels)
     : matchedLabels;
   dbg(`filtered labels: %O`, filteredLabels);
