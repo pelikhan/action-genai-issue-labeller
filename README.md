@@ -57,7 +57,7 @@ jobs:
 This workflow will label issues using GitHub Models.
 
 ```yaml
-name: genai issue labeller
+name: GenAI Issue Labeller
 on:
   issues:
     types: [opened, reopened, edited]

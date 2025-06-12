@@ -32,3 +32,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           max_labels: 3
           github_issue: "2"
+          debug: "script*"
