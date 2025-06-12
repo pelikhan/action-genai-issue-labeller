@@ -1,6 +1,9 @@
 name: action-genai-issue-labeller
 description: Labels GitHub issues based on their content using GitHub Models.
 inputs:
+  max_labels:
+    description: Maximum number of labels to suggest.
+    required: false
   instructions:
     description:
       Additional Instructions for the AI model to follow when labeling
