@@ -40,7 +40,9 @@ const issueLabels =
 
 output.heading(3, "Issue Details");
 output.itemLink(issue.html_url);
+output.item("title");
 output.fence(issue.title);
+output.item("body");
 output.fence(issue.body);
 output.itemValue("labels", issueLabels.join(", "));
 
