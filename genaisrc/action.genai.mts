@@ -38,7 +38,8 @@ const labels = await github.listIssueLabels();
 const issueLabels =
   issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
 
-output.item(issue.title);
+output.heading(3, "Issue Details");
+output.fence(issue.title);
 output.fence(issue.body);
 
 const { fences, text, error } = await runPrompt((ctx) => {
@@ -72,6 +73,7 @@ label2 = reasoning2
 });
 if (error) cancel(`error while running the prompt: ${error.message}`);
 
+output.heading(3, "AI Response");
 output.fence(text);
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
