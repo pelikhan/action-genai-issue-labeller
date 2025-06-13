@@ -33,9 +33,9 @@ const { instructions, maxLabels } = vars as {
   instructions: string;
   maxLabels: number;
 };
-const allowedLabels = vars.labels?.split(/,\s*/g);
+const allowedLabels = vars.labels?.split(/,\s*/g)?.filter(Boolean);
 dbg(`issue: %O`, issue);
-dbg(`allowedLabels: %O`, allowedLabels);
+dbg(`allowed labels: %O`, allowedLabels);
 dbg(`maxLabels: %d`, maxLabels);
 dbg(`instructions: %s`, instructions || "none");
 
