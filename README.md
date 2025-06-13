@@ -28,6 +28,7 @@ This action analyzes a GitHub issue and tags it with relevant labels using a lar
 - `github_token`: **required** GitHub token with `models: read` permission at least. (required)
 - `github_issue`: **required** GitHub issue number to use when generating comments.
 - `instructions`: Additional instructions to the LLM on how to label the issue.
+- `labels`: Comma-separated list of labels to use.
 - `max_labels`: Maximum number of labels to assign to the issue.
 - `debug`: Enable debug logging.
 

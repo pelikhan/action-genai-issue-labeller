@@ -33,3 +33,4 @@ jobs:
           max_labels: 3
           github_issue: "2"
           debug: "*"
+          labels: "invalid,question"

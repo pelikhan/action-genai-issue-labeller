@@ -1,7 +1,7 @@
 {
   "description": "A GitHub Action to label issues based on their content using AI.",
   "dependencies": {
-    "genaiscript": "1.142.7"
+    "genaiscript": "1.142.8"
   },
   "scripts": {
     "upgrade": "npx -y npm-check-updates -u && npm install",
@@ -14,8 +14,8 @@
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action",
     "test": "echo 'No tests defined.'",
-    "dev": "INPUT_GITHUB_ISSUE=5 DEBUG=script* genaiscript run issue-labeller",
-    "start": "genaiscript run issue-labeller --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
+    "dev": "INPUT_GITHUB_ISSUE=5 INPUT_LABELS=question,documentation DEBUG=script* genaiscript run action",
+    "start": "genaiscript run action --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
     "release": "sh release.sh"
   },
   "version": "0.0.27"
