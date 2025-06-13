@@ -2,7 +2,7 @@ script({
   title: "Labels GitHub issues based on their content using GitHub Models",
   description:
     "A GitHub Action to label issues based on their content using AI.",
-  model: "small",
+  accept: "none",
   branding: {
     icon: "map-pin",
     color: "yellow",
