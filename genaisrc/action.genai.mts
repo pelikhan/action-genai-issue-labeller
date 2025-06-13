@@ -40,7 +40,7 @@ dbg(`maxLabels: %d`, maxLabels);
 dbg(`instructions: %s`, instructions || "none");
 
 const labels = (await github.listIssueLabels()).filter(
-  (label) => !allowedLabels || allowedLabels.includes(label.name)
+  (label) => !allowedLabels?.length || allowedLabels.includes(label.name)
 );
 if (!labels.length)
   throw new Error("No labels found or all labels are filtered out.");
@@ -93,6 +93,7 @@ label2 = reasoning2
   {
     responseType: "text",
     systemSafety: false,
+    label: "Assigning labels to GitHub issue",
   }
 );
 if (error) cancel(`error while running the prompt: ${error.message}`);

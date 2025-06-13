@@ -14,7 +14,7 @@
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action",
     "test": "echo 'No tests defined.'",
-    "dev": "INPUT_GITHUB_ISSUE=5 INPUT_LABELS=question,documentation DEBUG=script* genaiscript run action",
+    "dev": "INPUT_GITHUB_ISSUE=5 DEBUG=script* genaiscript run action",
     "start": "genaiscript run action --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
     "release": "sh release.sh"
   },
