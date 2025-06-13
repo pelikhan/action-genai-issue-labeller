@@ -61,10 +61,17 @@ jobs:
 ## Example
 
 This workflow will label issues using GitHub Models.
+It also supports manual triggering with an input for the issue number.
 
 ```yaml
 name: GenAI Issue Labeller
 on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        type: number
+        description: "Issue number to process"
+        required: true
   issues:
     types: [opened, reopened, edited]
 permissions:
@@ -72,7 +79,7 @@ permissions:
   issues: write
   models: read
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.issue.number }}
+  group: ${{ github.workflow }}-${{ github.event.inputs.issue_number || github.event.issue.number }}
   cancel-in-progress: true
 jobs:
   genai-issue-labeller:
@@ -82,7 +89,7 @@ jobs:
       - uses: pelikhan/action-genai-issue-labeller@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_issue: ${{ github.event.issue.number }}
+          github_issue: ${{ github.event.inputs.issue_number || github.event.issue.number }}
 ```
 
 ## Development
