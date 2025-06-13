@@ -42,6 +42,8 @@ dbg(`instructions: %s`, instructions || "none");
 const labels = (await github.listIssueLabels()).filter(
   (label) => !allowedLabels || allowedLabels.includes(label.name)
 );
+if (!labels.length)
+  throw new Error("No labels found or all labels are filtered out.");
 const issueLabels =
   issue.labels?.map((l) => (typeof l === "string" ? l : l.name)) || [];
 
