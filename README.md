@@ -20,6 +20,9 @@ This action analyzes a GitHub issue and tags it with relevant labels using a lar
 4. **Parse and Filter**: Parses the LLM output, filters for valid and relevant labels, and limits the number of labels based on configuration.
 5. **Update Issue**: Updates the GitHub issue with the new set of labels, combining existing and newly suggested ones.
 
+> [!TIP]
+> Improve the description of your labels to increase the accuracy of the LLM's suggestions.
+
 ## Inputs
 
 - `github_token`: **required** GitHub token with `models: read` permission at least. (required)
