@@ -10,7 +10,7 @@ Uses an LLM to assign labels to a issue.
 This action analyzes a GitHub issue and tags it with relevant labels using a large language model (LLM) from GitHub Models. The algorithm works as follows:
 
 1. **Fetch Issue and Labels**: Retrieves the issue content and the list of available labels from the repository.
-2. **Prepare Prompt**: Constructs a system prompt for the LLM, including:
+2. **Prepare Prompt**: Constructs a prompt for the LLM, including:
    - The issue title and body
    - The list of available labels with descriptions
    - Any existing labels on the issue
