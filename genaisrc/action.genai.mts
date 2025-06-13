@@ -94,6 +94,7 @@ label2 = reasoning2
     responseType: "text",
     systemSafety: false,
     label: "Assigning labels to GitHub issue",
+    model: "small",
   }
 );
 if (error) cancel(`error while running the prompt: ${error.message}`);
