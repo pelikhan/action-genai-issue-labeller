@@ -39,9 +39,12 @@ dbg(`allowed labels: %O`, allowedLabels);
 dbg(`maxLabels: %d`, maxLabels);
 dbg(`instructions: %s`, instructions || "none");
 
-const labels = (await github.listIssueLabels()).filter(
-  (label) => !allowedLabels?.length || allowedLabels.includes(label.name)
-);
+const dissallowedLabels = ["duplicate", "wontfix"];
+const labels = (await github.listIssueLabels())
+  .filter(
+    (label) => !allowedLabels?.length || allowedLabels.includes(label.name)
+  )
+  .filter((label) => !dissallowedLabels.includes(label.name));
 if (!labels.length)
   throw new Error("No labels found or all labels are filtered out.");
 const issueLabels =

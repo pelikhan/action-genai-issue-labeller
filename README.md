@@ -32,6 +32,8 @@ This action analyzes a GitHub issue and tags it with relevant labels using a lar
 - `max_labels`: Maximum number of labels to assign to the issue.
 - `debug`: Enable debug logging.
 
+Note that `duplicate` and `wontfix` labels are always excluded from the suggestions, as they are not useful for categorization.
+
 ## Usage
 
 Add the following to your step in your workflow file:
