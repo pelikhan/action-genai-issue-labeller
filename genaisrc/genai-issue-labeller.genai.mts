@@ -26,10 +26,10 @@ script({
 });
 
 const { dbg, vars, output } = env;
-const info = await github.info()
-const event = (info as any).event
-console.log(event)
-const issue = await github.getIssue();
+const info = await github.info();
+const event = (info as any).event as { issue: { number: number } };
+console.log(event);
+const issue = await github.getIssue(event?.issue?.number);
 if (!issue)
   throw new Error("Issue not configure, did you set the 'github_issue' input?");
 const { instructions, maxLabels } = vars as {
@@ -45,7 +45,7 @@ dbg(`instructions: %s`, instructions || "none");
 const dissallowedLabels = ["duplicate", "wontfix"];
 const labels = (await github.listIssueLabels())
   .filter(
-    (label) => !allowedLabels?.length || allowedLabels.includes(label.name),
+    (label) => !allowedLabels?.length || allowedLabels.includes(label.name)
   )
   .filter((label) => !dissallowedLabels.includes(label.name));
 if (!labels.length)
@@ -67,7 +67,7 @@ for (const label of labels)
 const { fences, text, error } = await runPrompt(
   (ctx) => {
     ctx.$`You are a GitHub issue triage bot. Your task is to analyze the issue and suggest labels based on its content.`.role(
-      "system",
+      "system"
     );
     if (instructions)
       ctx.$`## Additional Instructions
@@ -92,7 +92,7 @@ label2 = reasoning2
       "LABELS",
       labels
         .map(({ name, description }) => `${name}: ${description}`)
-        .join("\n"),
+        .join("\n")
     );
     ctx.def("ISSUE", `${issue.title}\n${issue.body}`);
   },
@@ -101,7 +101,7 @@ label2 = reasoning2
     systemSafety: false,
     label: "Assigning labels to GitHub issue",
     model: "small",
-  },
+  }
 );
 if (error) cancel(`error while running the prompt: ${error.message}`);
 
@@ -109,7 +109,7 @@ output.heading(3, "AI Response");
 output.fence(text);
 const entries = parsers.INI(
   fences.find((f) => f.language === "ini")?.content || text,
-  { defaultValue: {} },
+  { defaultValue: {} }
 ) as Record<string, string>;
 dbg(`entries: %O`, entries);
 const matchedLabels = Object.entries(entries)
