@@ -1,11 +1,5 @@
 name: GenAI Issue Labeller
 on:
-  workflow_dispatch:
-    inputs:
-      issue_number:
-        type: number
-        description: "Issue number to process"
-        required: true
   issues:
     types: [opened, reopened, edited]
 permissions:
@@ -13,15 +7,13 @@ permissions:
   issues: write
   models: read
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.inputs.issue_number || github.event.issue.number }}
+  group: ${{ github.workflow }}-${{ github.event.issue.number }}
   cancel-in-progress: true
 jobs:
-  run-script:
+  genai-issue-labeller:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pelikhan/action-genai-issue-labeller@main
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_issue: ${{ github.event.inputs.issue_number || github.event.issue.number }}
-          debug: "*"

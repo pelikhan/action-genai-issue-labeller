@@ -1,29 +1,33 @@
 name: action-genai-issue-labeller
-description: Labels GitHub issues based on their content using GitHub Models.
+description: Labels GitHub issues based on their content using GitHub Models
 inputs:
   labels:
-    description: Comma-separated list of labels to apply to the issue.
+    description: List of labels to use for labeling issues.
     required: false
   max_labels:
     description: Maximum number of labels to suggest.
     required: false
   instructions:
-    description:
-      Additional Instructions for the AI model to follow when labeling
+    description: Additional Instructions for the AI model to follow when labeling
       issues. These instructions will be inserted in the system prompt.
     required: false
   github_token:
-    description: "GitHub token with `models: read` permission at least."
+    description: "GitHub token with `models: read` permission at least
+      (https://microsoft.github.io/genaiscript/reference/github-actions/#github\
+      -models-permissions)."
     required: true
   github_issue:
     description: GitHub issue number to use when generating comments.
-    required: true
   debug:
-    description: Enable debug logging.
+    description: Enable debug logging
+      (https://microsoft.github.io/genaiscript/reference/scripts/logging/).
     required: false
 branding:
-    icon: "map-pin"
-    color: "yellow"
+  icon: map-pin
+  color: yellow
 runs:
   using: docker
   image: Dockerfile
+outputs:
+  text:
+    description: The generated text output.
