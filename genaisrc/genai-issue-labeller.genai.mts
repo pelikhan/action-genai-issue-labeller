@@ -26,6 +26,9 @@ script({
 });
 
 const { dbg, vars, output } = env;
+const info = await github.info()
+const event = (info as any).event
+console.log(event)
 const issue = await github.getIssue();
 if (!issue)
   throw new Error("Issue not configure, did you set the 'github_issue' input?");
