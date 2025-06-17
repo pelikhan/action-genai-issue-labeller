@@ -26,7 +26,7 @@ This action analyzes a GitHub issue and tags it with relevant labels using a lar
 ## Inputs
 
 - `github_token`: **required** GitHub token with `models: read` permission at least. (required)
-- `github_issue`: **required** GitHub issue number to use when generating comments.
+- `github_issue`: GitHub issue number to use when generating comments. This value is typically inferred from the event context.
 - `instructions`: Additional instructions to the LLM on how to label the issue.
 - `labels`: Comma-separated list of labels to use.
 - `max_labels`: Maximum number of labels to assign to the issue.
@@ -55,7 +55,6 @@ jobs:
       - uses: pelikhan/action-genai-issue-labeller@v0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_issue: ${{ github.event.issue.number }}
 ```
 
 ## Example
