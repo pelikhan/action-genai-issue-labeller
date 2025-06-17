@@ -27,9 +27,9 @@ script({
 
 const { dbg, vars, output } = env;
 const info = await github.info();
-const event = (info as any).event as { issue: { number: number } };
-console.log(event);
-const issue = await github.getIssue(event?.issue?.number);
+const event = info.event as { issue: { number: number } };
+console.log(event?.issue);
+const issue = await github.getIssue();
 if (!issue)
   throw new Error("Issue not configure, did you set the 'github_issue' input?");
 const { instructions, maxLabels } = vars as {

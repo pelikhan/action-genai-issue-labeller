@@ -1,7 +1,7 @@
 {
   "description": "A GitHub Action to label issues based on their content using AI.",
   "dependencies": {
-    "genaiscript": "1.142.11"
+    "genaiscript": "1.142.12"
   },
   "scripts": {
     "upgrade": "npx -y npm-check-updates -u && npm install",
