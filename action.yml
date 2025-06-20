@@ -27,7 +27,7 @@ branding:
   color: yellow
 runs:
   using: docker
-  image: Dockerfile
+  image: ghcr.io/pelikhan/action-genai-issue-labeller:v0.0.33  
 outputs:
   text:
     description: The generated text output.
