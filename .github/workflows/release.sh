@@ -40,7 +40,7 @@ docker logout ghcr.io
 echo "✅ Docker image pushed to GHCR: $IMAGE_NAME:$NEW_VERSION and $IMAGE_NAME:$MAJOR"
 
 # Update action.yml with new version
-sed -i "s|image: .*|image: $IMAGE_NAME:$NEW_VERSION|" action.yml
+sed -i "s|image: .*|image: docker://$IMAGE_NAME:$NEW_VERSION|" action.yml
 git add action.yml
 git commit -m "[chore] upgrade image in action.yml"
 
