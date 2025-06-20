@@ -24,26 +24,6 @@ git push origin HEAD --tags
 IMAGE_NAME="ghcr.io/pelikhan/action-genai-issue-labeller"
 echo "Building Docker image: $IMAGE_NAME:$NEW_VERSION"
 
-# Check that required environment variables are set
-if [ -z "$GITHUB_TOKEN" ]; then
-  echo "❌ GITHUB_TOKEN environment variable is required for GHCR authentication"
-  exit 1
-fi
-
-if [ -z "$GITHUB_ACTOR" ]; then
-  echo "❌ GITHUB_ACTOR environment variable is required for GHCR authentication"
-  exit 1
-fi
-
-# Check that Docker is available
-if ! command -v docker &> /dev/null; then
-  echo "❌ Docker is not installed or not available in PATH"
-  exit 1
-fi
-
-# Login to GitHub Container Registry
-echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
-
 # Build the Docker image with version tag
 docker build -t "$IMAGE_NAME:$NEW_VERSION" .
 
