@@ -1,4 +1,7 @@
 
+#!/bin/bash
+set -e
+
 # make sure there's no other changes
 git pull
 
@@ -17,15 +20,56 @@ npm run typecheck
 NEW_VERSION=$(npm version patch -m "chore: bump version to %s")
 echo "version: $NEW_VERSION"
 
+# Calculate major version for tagging
+MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
+echo "major: $MAJOR"
+
 # Step 2: Push commit and tag
 git push origin HEAD --tags
 
-# Step 3: Create GitHub release
+# Step 3: Build and push Docker image to GitHub Container Registry
+IMAGE_NAME="ghcr.io/pelikhan/action-genai-issue-labeller"
+echo "Building Docker image: $IMAGE_NAME:$NEW_VERSION"
+
+# Check that required environment variables are set
+if [ -z "$GITHUB_TOKEN" ]; then
+  echo "❌ GITHUB_TOKEN environment variable is required for GHCR authentication"
+  exit 1
+fi
+
+if [ -z "$GITHUB_ACTOR" ]; then
+  echo "❌ GITHUB_ACTOR environment variable is required for GHCR authentication"
+  exit 1
+fi
+
+# Check that Docker is available
+if ! command -v docker &> /dev/null; then
+  echo "❌ Docker is not installed or not available in PATH"
+  exit 1
+fi
+
+# Login to GitHub Container Registry
+echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+
+# Build the Docker image with version tag
+docker build -t "$IMAGE_NAME:$NEW_VERSION" .
+
+# Tag with major version
+docker tag "$IMAGE_NAME:$NEW_VERSION" "$IMAGE_NAME:$MAJOR"
+
+# Push both tags
+docker push "$IMAGE_NAME:$NEW_VERSION"
+docker push "$IMAGE_NAME:$MAJOR"
+
+# Logout from Docker registry for security
+docker logout ghcr.io
+
+echo "✅ Docker image pushed to GHCR: $IMAGE_NAME:$NEW_VERSION and $IMAGE_NAME:$MAJOR"
+
+# Step 4: Create GitHub release
 gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $NEW_VERSION"
 
-# Step 4: update major tag if any
-MAJOR=$(echo "$NEW_VERSION" | cut -d. -f1)
-echo "major: $MAJOR"
+# Step 5: update major tag if any
 git tag -f $MAJOR $NEW_VERSION
 git push origin $MAJOR --force
 
