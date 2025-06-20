@@ -39,6 +39,10 @@ docker logout ghcr.io
 
 echo "✅ Docker image pushed to GHCR: $IMAGE_NAME:$NEW_VERSION and $IMAGE_NAME:$MAJOR"
 
+# Update action.yml with new version
+sed -i "s|image: .*|image: $IMAGE_NAME:$NEW_VERSION|"
+git add action.yml
+
 # Step 4: Create GitHub release
 gh release create "$NEW_VERSION" --title "$NEW_VERSION" --notes "Patch release $NEW_VERSION"
 
