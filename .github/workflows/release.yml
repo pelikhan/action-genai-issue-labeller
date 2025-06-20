@@ -1,0 +1,62 @@
+name: Release
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Dry run (skip actual release)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run release script
+        if: ${{ !inputs.dry_run }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: |
+          chmod +x release.sh
+          ./release.sh
+
+      - name: Dry run release script
+        if: ${{ inputs.dry_run }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: |
+          echo "🧪 Dry run mode - would execute release.sh"
+          echo "Environment check:"
+          echo "- GITHUB_TOKEN: $([ -n "$GITHUB_TOKEN" ] && echo "✅ Set" || echo "❌ Not set")"
+          echo "- GITHUB_ACTOR: $GITHUB_ACTOR"
+          echo "- Docker available: $(command -v docker &> /dev/null && echo "✅ Yes" || echo "❌ No")"
+          echo "- Git status:"
+          git status --porcelain
+          echo "- Current version: $(node -p "require('./package.json').version")"
