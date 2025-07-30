@@ -93,6 +93,9 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to thi
 To evaluate the accuracy of the labeller on existing issues, use the evaluation scripts:
 
 ```bash
+# Show evaluation help and examples
+npm run evaluate:help
+
 # Basic evaluation
 npm run evaluate <owner> <repo> -- --count 100
 
