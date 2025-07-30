@@ -13,7 +13,9 @@
     "fix": "genaiscript scripts fix",
     "typecheck": "genaiscript scripts compile",
     "configure": "genaiscript configure action genai-issue-labeller",
-    "test": "echo 'No tests defined.'",
+    "test": "node scripts/test-evaluator.js",
+    "evaluate": "node scripts/evaluate-labeller.js",
+    "evaluate:advanced": "node scripts/evaluate-labeller-advanced.js",
     "dev": "INPUT_GITHUB_ISSUE=5 DEBUG=script* genaiscript run genai-issue-labeller",
     "start": "genaiscript run genai-issue-labeller --github-workspace --no-run-trace --no-output-trace --out-output $GITHUB_STEP_SUMMARY",
     "release": "sh release.sh"

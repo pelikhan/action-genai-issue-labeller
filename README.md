@@ -87,3 +87,33 @@ jobs:
 ## Development
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for details on how to contribute to this action.
+
+## Evaluation
+
+To evaluate the accuracy of the labeller on existing issues, use the evaluation scripts:
+
+```bash
+# Basic evaluation
+npm run evaluate <owner> <repo> -- --count 100
+
+# Advanced evaluation (recommended - better analysis)
+npm run evaluate:advanced <owner> <repo> -- --count 100
+
+# Or run directly with Node.js
+node scripts/evaluate-labeller.js <owner> <repo> --count 100 --token YOUR_GITHUB_TOKEN
+node scripts/evaluate-labeller-advanced.js <owner> <repo> --count 100 --token YOUR_GITHUB_TOKEN
+
+# Run tests with mock data
+npm test
+```
+
+The evaluation scripts will:
+- Fetch the last N issues from a repository
+- Simulate the labelling process (using enhanced keyword-based heuristics)
+- Compare predicted labels with existing labels
+- Calculate comprehensive accuracy metrics (precision, recall, F1-score, etc.)
+- Generate detailed reports with per-label analysis
+
+**Note**: Current evaluation uses keyword-based simulation. Future versions will integrate with the actual AI model for real evaluation.
+
+See [scripts/README.md](./scripts/README.md) for detailed documentation on evaluation functionality.

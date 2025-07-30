@@ -3,3 +3,6 @@ node_modules
 .env
 .*.env
 .env.*
+
+# Evaluation result files
+evaluation-results-*.json
